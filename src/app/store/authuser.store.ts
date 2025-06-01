@@ -33,24 +33,19 @@ export const authUserStore = signalStore(
     //   })
     // },
 
-    async login(user:any) {
-      patchState(store,(state) => ({...state, loading: true}));
-      authService.userLogin(user).subscribe({
-        next: (res) => {
-          localStorage.setItem('auth_user', JSON.stringify(res));
-          patchState(store,(state) => ({...state, loggedUser: res, isLoggedIn: true, loading: false}));
-        },
-        error: (err) => {
-          console.error(err);
-          patchState(store,(state) => ({...state, loading: false}));
-        }
-      })    
+    setuser(user:any):any {
+      localStorage.setItem('auth_user', JSON.stringify(user));
+      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false}));
+  
     },
 
-    logout() {
+    removeuser() {
       localStorage.removeItem('auth_user');
       patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
     },
+    updateLoading(loading:boolean) {
+      patchState(store,(state) => ({...state, loading: loading}));
+    }
 
   })),
 

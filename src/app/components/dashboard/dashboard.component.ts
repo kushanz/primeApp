@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+import { HeaderComponent } from '../../layout/header/header.component';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-dashboard',
+  imports: [RouterOutlet,HeaderComponent],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css'
+})
+export class DashboardComponent {
+
+}

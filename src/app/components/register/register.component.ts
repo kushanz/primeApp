@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -55,6 +55,20 @@ export class RegisterComponent {
   //     return null;
   //   }
   // };
+  // customValidator: ValidatorFn = (control: FormGroup):ValidatorFn | null => {
+
+  // }
+ messageRequiredIfChecked(group: FormGroup): ValidatorFn {
+  return (): { [key: string]: any } | null => {
+    const isRequired = group.controls['acceptTerms'].value;
+    const message = group.controls['message'].value;
+
+    if (isRequired && !message) {
+      return { 'messageRequired': true };
+    }
+    return null;
+  };
+}
 
   onSubmit() {
     this.saving.set(true);
