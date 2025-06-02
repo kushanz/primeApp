@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import {getState, patchState, signalStore, withComputed, withHooks, withMethods,withProps ,withState} from '@ngrx/signals'
 import { AuthService } from '../services/auth.service';
 
@@ -32,6 +32,10 @@ export const authUserStore = signalStore(
     //     }
     //   })
     // },
+    getUser() {
+      const state = getState(store);
+      return computed(() => state.loggedUser);
+    },
 
     setuser(user:any):any {
       localStorage.setItem('auth_user', JSON.stringify(user));
@@ -51,6 +55,19 @@ export const authUserStore = signalStore(
 
   withHooks({
     onInit: (store,authService = inject(AuthService)) => {
+      const authUserFromLS = JSON.parse(localStorage.getItem('auth_user') || '{}');
+
+      patchState(store, (state) => ({
+        ...state,
+        loggedUser: authUserFromLS,
+        isLoggedIn: !!authUserFromLS?.token,
+        token: authUserFromLS?.token || '',
+      }))
+
+      effect(() => {
+        const state = getState(store)
+        localStorage.setItem('auth_user', JSON.stringify(state.loggedUser));
+      })
 
       // authService.userRegister({}).subscribe((res) => {
         
