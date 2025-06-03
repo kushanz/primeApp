@@ -1,1 +1,41 @@
-<p>userlist works!</p>
+@if(userLoading()) {
+  <p-table [value]="fakeList()" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+          <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Created At</th>
+          </tr>
+      </ng-template>
+      <ng-template #body let-fake>
+          <tr>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+          </tr>
+      </ng-template>
+  </p-table>
+} @else {
+  <p-table [value]="userList()" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+          <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Created At</th>
+          </tr>
+      </ng-template>
+      <ng-template #body let-user>
+          <tr>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.createdAt | date}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+
+}
+

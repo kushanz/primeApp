@@ -15,6 +15,7 @@ export class UserService {
   search = signal<string>('');
   userResource = httpResource<any>(() => `${environment.baseUrl}/users`);
   allUsersSignal = computed(() => this.userResource.value ?? []);
+  userLoading = computed(() => this.userResource.isLoading);
   // userResource = httpResource<any>(() => `http://localhost:3000/api/users?search=${this.search()}`);
 
   // userResource2 = httpResource<any>(() =>  ({
