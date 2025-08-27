@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Popover, PopoverModule } from 'primeng/popover';
@@ -7,7 +7,7 @@ import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink,RouterLinkActive,PopoverModule,Button],
+  imports: [RouterLink, RouterLinkActive, PopoverModule, Button],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
