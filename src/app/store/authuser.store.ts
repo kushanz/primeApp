@@ -7,6 +7,8 @@ type loggedUserState = {
   isLoggedIn: boolean;
   token: string;
   loading: boolean;
+  accessToken?: string;
+  refreshToken?: string;
 }
 
 const initialState: loggedUserState = {
@@ -14,6 +16,9 @@ const initialState: loggedUserState = {
   isLoggedIn: false,
   token: '',
   loading: false,
+  accessToken: '',
+  refreshToken: ''
+
 }
 
 export const authUserStore = signalStore(
@@ -36,10 +41,16 @@ export const authUserStore = signalStore(
       const state = getState(store);
       return computed(() => state.loggedUser);
     },
+    getAccessToken() {
+      const state = getState(store);
+      return computed(() => state.accessToken);
+    },
 
     setuser(user:any):any {
-      localStorage.setItem('auth_user', JSON.stringify(user));
-      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false}));
+      // save localstorage user object without token for security
+      const {token, ...userdata} = user;
+      localStorage.setItem('auth_user', JSON.stringify(userdata));
+      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false, token: token}));
   
     },
 

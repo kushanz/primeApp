@@ -1,14 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
 import { CommonModule, DatePipe } from '@angular/common';
 import { SplitButton } from 'primeng/splitbutton';
 import { MenuItem } from 'primeng/api';
+import { FormsModule, NgModel } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'userlist',
-  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton],
+  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton, FormsModule, InputTextModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })
@@ -16,6 +18,7 @@ export class UserlistComponent {
 
   usersService = inject(UserService)
 
+  searchText = this.usersService.search;
   
   userList = this.usersService.allUsersSignal();
   userLoading = this.usersService.userLoading()

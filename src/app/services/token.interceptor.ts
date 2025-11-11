@@ -4,14 +4,17 @@ import { catchError, throwError } from 'rxjs';
 import { authUserStore } from '../store/authuser.store';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  const authuser = inject(authUserStore);
+  const accesstoken = authuser.getAccessToken();
   console.log('Token Interceptor is running');
-  const auth_user = JSON.parse(localStorage.getItem('auth_user') || '{}');
-  if (auth_user?.token) {
+  console.log('Access Token:', accesstoken);
+  // const auth_user = JSON.parse(localStorage.getItem('auth_user') || '{}');
+  if (accesstoken()) {
     const newRequest = req.clone({
       setHeaders: {
 
         'Accept': '*/*',
-        'Authorization': `Bearer ${auth_user?.token}`
+        // 'Authorization': `Bearer ${accesstoken()}`
       },
       // withCredentials: true,
     })

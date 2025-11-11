@@ -1,6 +1,6 @@
 
 import { Component, inject, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { authUserStore } from '../../store/authuser.store';
 import { Button } from 'primeng/button';
@@ -14,6 +14,7 @@ import { Button } from 'primeng/button';
 export class HeaderComponent {
 
   private authUserStore = inject(authUserStore)
+  private router = inject(Router)
 
   loggedUser = this.authUserStore.getUser();
 
@@ -31,6 +32,7 @@ export class HeaderComponent {
 
     logout() {
         this.authUserStore.removeuser();
-        window.location.href = '/login'; // Redirect to login page
+        // window.location.href = '/login'; // Redirect to login page
+        this.router.navigate(['login']);
     }
 }
