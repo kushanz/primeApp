@@ -12,7 +12,7 @@
       <!-- Your content -->
       @if(userLoading()) {
         <p-table [value]="fakeList()" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template #header>
+            <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
@@ -20,7 +20,7 @@
                     <th>Created At</th>
                 </tr>
             </ng-template>
-            <ng-template #body let-fake>
+            <ng-template pTemplate="body" let-fake>
                 <tr>
                   <td><p-skeleton /></td>
                   <td><p-skeleton /></td>
@@ -31,7 +31,7 @@
         </p-table>
       } @else {
         <p-table [value]="userList()" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template #header>
+            <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
@@ -39,7 +39,7 @@
                     <th>Created At</th>
                 </tr>
             </ng-template>
-            <ng-template #body let-user>
+            <ng-template pTemplate="body" let-user>
                 <tr>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
