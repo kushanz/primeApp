@@ -18,13 +18,17 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     return next(newRequest).pipe(
       catchError((error) => {
         console.error('Error in token interceptor:', error);
+
+        if (error.status === 0) {
+        console.error('CORS or Network Error:', error);
+        // This is likely a CORS error or network issue
+        }
+
         if(error.status == 401) {
           // Handle unauthorized error, e.g., redirect to login
           console.error('Unauthorized request:', error);
           localStorage.removeItem('auth_user'); // Clear the stored user data
-
           window.location.href = '/login'; // Redirect to login page
-          
         }
         return throwError(() => error)
       })
