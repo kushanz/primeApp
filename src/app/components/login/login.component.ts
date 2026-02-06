@@ -46,12 +46,15 @@ export class LoginComponent {
         next: (res:any) => {
           this.authStore.updateLoading(false);
           this.authStore.setuser(res.loggedUser);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
-          this.router.navigate(['/dashboard']);
+          // Use setTimeout to ensure state is updated before navigation
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
+          }, 100);
         },
         error: (err) => {
           this.authStore.updateLoading(false);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
         }
       })
 

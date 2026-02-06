@@ -50,7 +50,7 @@ export const authUserStore = signalStore(
       // save localstorage user object without token for security
       const {token, ...userdata} = user;
       localStorage.setItem('auth_user', JSON.stringify(userdata));
-      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false, token: token}));
+      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false}));
   
     },
 
