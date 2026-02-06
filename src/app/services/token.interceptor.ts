@@ -21,7 +21,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req).pipe(
       catchError((error) => {
         console.error('Error in token interceptor:', error);
-        if(error.status == 401) {
+        if(error.status == 401 || error.status == 403) {
           // Handle unauthorized error, e.g., redirect to login
           console.error('Unauthorized request:', error);
           localStorage.removeItem('auth_user'); // Clear the stored user data
