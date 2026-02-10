@@ -10,6 +10,10 @@ import { RippleModule } from 'primeng/ripple';
   imports: [CommonModule,RouterModule, RippleModule],
   templateUrl: './menuitem.component.html',
   styleUrl: './menuitem.component.scss',
+  host: {
+        '[class.active-menuitem]': 'isActive()',
+        '[class.layout-root-menuitem]': 'root()'
+    },
 })
 export class MenuitemComponent {
     layoutService = inject(LayoutService);
