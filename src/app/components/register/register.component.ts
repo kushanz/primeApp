@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
   imports: [ButtonModule,AutoCompleteModule,SelectModule,ReactiveFormsModule,InputTextModule,CheckboxModule,RouterLink,ToastModule],
   providers: [MessageService],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 

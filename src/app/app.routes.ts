@@ -4,7 +4,7 @@ import { authGuard, loginGuard } from './services/auth.guard';
 export const routes: Routes = [
   {path: 'register',loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent)},
   {path: 'login',loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent),canActivate: [loginGuard]},
-  {path: 'dashboard',loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),canActivate: [authGuard],
+  {path: 'dashboard',loadComponent: () => import('./layout/layout/layout.component').then(m => m.LayoutComponent),canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {path: 'home',loadComponent: () => import('./components/pages/home/home.component').then(m => m.HomeComponent)},

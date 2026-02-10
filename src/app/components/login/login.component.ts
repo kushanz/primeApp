@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
   imports: [ButtonModule,AutoCompleteModule,SelectModule,FormsModule,InputTextModule,CheckboxModule,RouterLink, ReactiveFormsModule,ToastModule],
   providers: [MessageService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

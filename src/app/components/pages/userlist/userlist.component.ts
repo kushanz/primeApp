@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
   selector: 'userlist',
   imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton, FormsModule, InputTextModule],
   templateUrl: './userlist.component.html',
-  styleUrl: './userlist.component.css'
+  styleUrl: './userlist.component.scss'
 })
 export class UserlistComponent {
 
