@@ -17,7 +17,10 @@ model: MenuItem[] = [];
         this.model = [
             {
                 label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                items: [
+                  { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard/home'] },
+                  { label: 'Users', icon: 'pi pi-fw pi-users', routerLink: ['/dashboard/users'] }
+              ]
             },
             {
                 label: 'UI Components',

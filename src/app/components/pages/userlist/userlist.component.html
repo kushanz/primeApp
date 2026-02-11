@@ -1,6 +1,6 @@
-<header class="bg-white shadow-sm">
-    <div class="flex h-16 items-center justify-between mx-auto px-4 py-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Users</h1>
+<header class="card">
+    <div class="flex items-center justify-between mx-auto">
+      <h5 class="tracking-tight text-gray-900">Users</h5>
       <div class="card flex justify-center space-x-2">
           <input type="text" pInputText [(ngModel)]="searchText" [placeholder]="'Search user'" />
           <p-splitbutton label="New User" (onClick)="newUser()" [model]="items"outlined severity="secondary"  />

@@ -60,10 +60,39 @@
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button> -->
-                    <button type="button" class="layout-topbar-action">
+                    <p-button type="button" class="layout-topbar-action" (click)="op.toggle($event)">
                         <i class="pi pi-user"></i>
                         <span>Profile</span>
-                    </button>
+                    </p-button>
+
+                    <p-popover #op>
+                        <div class="flex flex-col gap-4 w-[20rem]">
+                            <div>
+                                <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Login User</span>
+                                <ul class="list-none p-0 m-0 flex flex-col gap-4">
+                                    <li class="flex items-center gap-2">
+                                        <img [src]="'https://api.dicebear.com/9.x/adventurer/svg?seed=Luis'" style="width: 32px" />
+                                        <div>
+                                            <span class="font-medium">{{ loggedUser().name }}</span>
+                                            <div class="text-sm text-muted-color">{{ loggedUser().email }}</div>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-muted-color ml-auto text-sm">
+                                            <span>{{ loggedUser().role }}</span>
+                                            <!-- <i class="pi pi-angle-down"></i> -->
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p-divider />
+                                <div class="flex flex-col gap-2">
+                                    <button class="p-button p-button-text w-full justify-start" (click)="logout()">
+                                        <i class="pi pi-sign-out"></i>
+                                        <span>Logout</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </p-popover>
+
                 </div>
             </div>
         </div>

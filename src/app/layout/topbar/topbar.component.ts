@@ -1,13 +1,17 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../layoutservice/layoutservice.service';
 import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { PopoverModule } from 'primeng/popover';
+import { authUserStore } from '../../store/authuser.store';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-topbar',
-  imports: [RouterModule, CommonModule,],
+  imports: [RouterModule, NgClass, ButtonModule, PopoverModule,DividerModule],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })
@@ -15,10 +19,19 @@ export class TopbarComponent {
   items!: MenuItem[];
   layoutService = inject(LayoutService);
 
+  private authUserStore = inject(authUserStore)
+  private router = inject(Router)
+  loggedUser = this.authUserStore.getUser();
+
   toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({
             ...state,
             darkTheme: !state.darkTheme
         }));
     }
-}
+
+    logout() {
+        this.authUserStore.removeuser();
+        this.router.navigate(['/login']);
+    }
+  }

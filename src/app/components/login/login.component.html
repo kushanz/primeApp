@@ -12,12 +12,12 @@
         <form class="space-y-4 md:space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div>
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
-            <input pInputText id="username" pSize="small" class="w-full" formControlName="email" />
+            <input pInputText id="username" pSize="large" class="w-full !bg-gray-50/10" formControlName="email" />
           </div>
   
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-            <input pInputText id="password" type="password" pSize="small" class="w-full" formControlName="password" />
+            <input pInputText id="password" type="password" pSize="large" class="w-full !bg-gray-50/10" formControlName="password" />
           </div>
 
           <div class="flex items-center justify-between">
