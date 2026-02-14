@@ -1,4 +1,4 @@
-import { Component, inject, model, signal } from '@angular/core';
+import { Component, HostListener, inject, model, signal } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
@@ -7,14 +7,19 @@ import { SplitButton } from 'primeng/splitbutton';
 import { MenuItem } from 'primeng/api';
 import { FormsModule, NgModel } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+// import { DialogModule } from 'primeng/dialog';
+import {DrawerModule} from 'primeng/drawer';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'userlist',
-  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton, FormsModule, InputTextModule],
+  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton,Button, FormsModule, InputTextModule, DrawerModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss'
 })
 export class UserlistComponent {
+
+  visible = signal(false);
 
   usersService = inject(UserService)
 
@@ -25,6 +30,21 @@ export class UserlistComponent {
 
   fakeList = signal(Array.from({ length: 10 }, (_, i) =>  `Item #${i}`));
   items: MenuItem[];
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // For F2 key
+    if (event.key === 'F2') {
+      event.preventDefault();
+      this.visible.set(true);
+    }
+    // Or for Ctrl+N (new user)
+    if (event.ctrlKey && event.key === 'n') {
+      event.preventDefault();
+      this.visible.set(true);
+    }
+  }
+
   constructor() {
 
     this.items = [
@@ -47,6 +67,15 @@ export class UserlistComponent {
   }
   newUser() {
     // Logic to create a new user
+    this.visible.set(true);
+
     console.log('New User button clicked');
   }
+
+focusFirstInput() {
+  setTimeout(() => {
+    const input = document.getElementById('name3') as HTMLInputElement;
+    input?.focus();
+  }, 100);
+}
 }

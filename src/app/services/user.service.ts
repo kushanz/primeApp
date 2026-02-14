@@ -38,7 +38,7 @@ export class UserService {
     // delay response with 5 seconds to simulate loading
 
     return this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(
-      delay(5000)
+      // delay(5000)
     );
   }
 }

@@ -1,21 +1,22 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+// import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
+// import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './services/token.interceptor';
+import { MyPreset } from './preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideRouter(routes),
-    provideAnimationsAsync(),
+    // provideAnimationsAsync(),
     providePrimeNG({
         theme: {
-            preset: Aura,
+            preset: MyPreset,
             options: {
                 darkModeSelector: '.app-dark'
             }
