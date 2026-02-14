@@ -10,10 +10,11 @@ import { InputTextModule } from 'primeng/inputtext';
 // import { DialogModule } from 'primeng/dialog';
 import {DrawerModule} from 'primeng/drawer';
 import { Button } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'userlist',
-  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton,Button, FormsModule, InputTextModule, DrawerModule],
+  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton,Button, FormsModule, InputTextModule, DrawerModule, SelectModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss'
 })
@@ -74,7 +75,7 @@ export class UserlistComponent {
 
 focusFirstInput() {
   setTimeout(() => {
-    const input = document.getElementById('name3') as HTMLInputElement;
+    const input = document.getElementById('firstname') as HTMLInputElement;
     input?.focus();
   }, 100);
 }
