@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -10,7 +10,7 @@ import { tokenInterceptor } from './services/token.interceptor';
 import { MyPreset } from './preset';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  providers: [provideZonelessChangeDetection(),
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideRouter(routes),
     // provideAnimationsAsync(),
