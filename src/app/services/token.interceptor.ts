@@ -1,46 +1,78 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, throwError, switchMap, BehaviorSubject, filter, take, Observable } from 'rxjs';
 import { authUserStore } from '../store/authuser.store';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+
+let isRefreshing = false;
+const refreshTokenSubject = new BehaviorSubject<any>(null);
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  // const authuser = inject(authUserStore);
-  // const accesstoken = authuser.getAccessToken();
   console.log('Token Interceptor is running');
   const router = inject(Router);
   const authStore = inject(authUserStore);
-  // console.log('Access Token:', accesstoken);
-  // const auth_user = JSON.parse(localStorage.getItem('auth_user') || '{}');
-  // if (accesstoken()) {
-    // const newRequest = req.clone({
-    //   setHeaders: {
+  const authService = inject(AuthService);
 
-    //     'Accept': '*/*',
-    //     // 'Authorization': `Bearer ${accesstoken()}`
-    //   },
-    //   // withCredentials: true,
-    // })
-    return next(req).pipe(
-      catchError((error) => {
-        console.error('Error in token interceptor:', error);
-        if(error.status == 401 || error.status == 403) {
-          // Handle unauthorized error, e.g., redirect to login
-          console.error('Unauthorized request:', error);
-          localStorage.removeItem('auth_user'); // Clear the stored user data
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      console.error('Error in token interceptor:', error);
+      
+      // Check if error is 401 or 403 and not from refresh endpoint
+      // Some backends return 403 for expired tokens instead of 401
+      if ((error.status === 401 || error.status === 403) && !req.url.includes('/auth/refreshtoken')) {
+        return handleUnauthorizedError(req, next, authStore, authService, router);
+      }
+      
+      return throwError(() => error);
+    })
+  );
+};
 
-          // Clear auth data
-          authStore.removeuser();
-          localStorage.removeItem('auth_user');
-          
-          // Navigate to login using Angular Router
-          router.navigate(['/login']);
-          
+function handleUnauthorizedError(
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+  authStore: any,
+  authService: AuthService,
+  router: Router
+): Observable<HttpEvent<unknown>> {
+  if (!isRefreshing) {
+    isRefreshing = true;
+    refreshTokenSubject.next(null);
+
+    return authService.refreshToken().pipe(
+      switchMap((response: any) => {
+        isRefreshing = false;
+        refreshTokenSubject.next(response.token);
+        
+        // Update user data with new token if needed
+        if (response.user) {
+          authStore.setuser(response.user);
         }
-        return throwError(() => error)
+        
+        // Retry the original request
+        return next(req);
+      }),
+      catchError((error) => {
+        isRefreshing = false;
+        // Refresh token failed, logout user
+        console.error('Token refresh failed:', error);
+        logout(authStore, router);
+        return throwError(() => error);
       })
     );
-  // } else {
-    // return next(req);
-  // }
-};
+  } else {
+    // Wait for the refresh to complete, then retry the request
+    return refreshTokenSubject.pipe(
+      filter(token => token !== null),
+      take(1),
+      switchMap(() => next(req))
+    );
+  }
+}
+
+function logout(authStore: any, router: Router) {
+  console.log('Logging out user due to authentication failure');
+  authStore.removeuser();
+  router.navigate(['/login']);
+}

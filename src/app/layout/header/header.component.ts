@@ -32,7 +32,5 @@ export class HeaderComponent {
 
     logout() {
         this.authUserStore.removeuser();
-        // window.location.href = '/login'; // Redirect to login page
-        this.router.navigate(['login']);
     }
 }

@@ -32,6 +32,5 @@ export class TopbarComponent {
 
     logout() {
         this.authUserStore.removeuser();
-        this.router.navigate(['/login']);
     }
   }

@@ -1,6 +1,7 @@
 import { computed, effect, inject } from '@angular/core';
 import {getState, patchState, signalStore, withComputed, withHooks, withMethods,withProps ,withState} from '@ngrx/signals'
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 type loggedUserState = {
   loggedUser: any;
@@ -26,7 +27,7 @@ export const authUserStore = signalStore(
 
   withState(initialState),
 
-  withMethods((store, authService = inject(AuthService)) => ({
+  withMethods((store, authService = inject(AuthService), router = inject(Router)) => ({
 
     // register(registerUser:any) {
     //   patchState(store,(state) => ({...state, loading: true}));
@@ -55,8 +56,20 @@ export const authUserStore = signalStore(
     },
 
     removeuser() {
-      localStorage.removeItem('auth_user');
-      patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
+      // Call logout API to clear server-side cookies
+      authService.logout().subscribe({
+        next: () => {
+          localStorage.removeItem('auth_user');
+          patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
+          router.navigate(['/login']);
+        },
+        error: () => {
+          // Even if API fails, clear local state
+          localStorage.removeItem('auth_user');
+          patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
+          router.navigate(['/login']);
+        }
+      });
     },
     updateLoading(loading:boolean) {
       patchState(store,(state) => ({...state, loading: loading}));

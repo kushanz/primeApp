@@ -20,7 +20,7 @@ export class UserService {
   // userResource = httpResource<any>(() => `${environment.baseUrl}/users`);
   userResource = rxResource({
   params: this.searchDebounce,
-  stream: () => this.http.get<any[]>(`${environment.baseUrl}/users?search=${this.search()}`,{withCredentials: true}).pipe(delay(2000)),
+  stream: () => this.http.get<any[]>(`${environment.baseUrl}/users?search=${this.search()}`,{withCredentials: true}),
   defaultValue: [],
   });
   allUsersSignal = computed(() => this.userResource.value ?? []);
@@ -38,7 +38,7 @@ export class UserService {
     // delay response with 5 seconds to simulate loading
 
     return this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(
-      // delay(5000)
+      delay(5000)
     );
   }
 }
