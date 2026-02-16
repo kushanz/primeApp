@@ -13,7 +13,7 @@
           <!-- Your content -->
           <!-- @if(userLoading()) { -->
             <!-- <p-table [value]="fakeList()" [tableStyle]="{ 'min-width': '50rem' }" [rows]="5"> -->
-                <ng-template pTemplate="header">
+                <!-- <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
@@ -28,7 +28,7 @@
                       <td><p-skeleton /></td>
                       <td><p-skeleton /></td>
                     </tr>
-                </ng-template>
+                </ng-template> -->
             <!-- </p-table> -->
           <!-- } @else { -->
             <p-table [value]="userList()" [paginator]="true" [rows]="15" [loading]="userLoading()" class="min-h-[calc(100vh-320px)]">
