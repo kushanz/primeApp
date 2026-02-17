@@ -1,5 +1,5 @@
 import { Component, HostListener, inject, model, signal } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../../services/user.service';
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -9,12 +9,12 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 // import { DialogModule } from 'primeng/dialog';
 import {DrawerModule} from 'primeng/drawer';
-import { Button } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
+import { AddUser } from '../add-user/add-user';
+
 
 @Component({
   selector: 'userlist',
-  imports: [TableModule, CommonModule, DatePipe,Skeleton,SplitButton,Button, FormsModule, InputTextModule, DrawerModule, SelectModule],
+  imports: [TableModule, DatePipe, SplitButton, FormsModule, InputTextModule, DrawerModule, AddUser],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss'
 })

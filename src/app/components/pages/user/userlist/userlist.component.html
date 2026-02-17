@@ -56,43 +56,7 @@
     </div>
 
     <p-drawer header="Add user details" [(visible)]="visible" styleClass="!w-full md:!w-80 lg:!w-[30rem]" position="right" [blockScroll]="true" dismissable="true" [modal]="true" (onShow)="focusFirstInput()">
-        <div class="flex flex-col gap-4">
-            <!-- <div class="font-semibold text-xl">Horizontal</div> -->
-            <div class="grid grid-cols-12 gap-4">
-                <label for="firstname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">First Name</label>
-                <div class="col-span-12 md:col-span-9">
-                    <input pInputText id="firstname" type="text" class="w-full" />
-                </div>
-            </div>
-            <div class="grid grid-cols-12 gap-4">
-                <label for="lastname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Last Name</label>
-                <div class="col-span-12 md:col-span-9">
-                    <input pInputText id="lastname" type="text" class="w-full" />
-                </div>
-            </div>
-            <div class="grid grid-cols-12 gap-4">
-                <label for="email" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Email</label>
-                <div class="col-span-12 md:col-span-9">
-                    <input pInputText id="email" type="text" class="w-full" />
-                </div>
-            </div>
-            <div class="grid grid-cols-12 gap-4">
-                <label for="password" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Password</label>
-                <div class="col-span-12 md:col-span-9">
-                    <input pInputText id="password" type="password" class="w-full" autocomplete="new-password" />
-                </div>
-            </div>
-            <!-- // add select field for user role as admin| user | manager -->
-             <div class="grid grid-cols-12 gap-4">
-                <label for="role" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Role</label>
-                <div class="col-span-12 md:col-span-9">
-                    <p-select id="role" [options]="[{label:'Admin', value:'admin'}, {label:'User', value:'user'}, {label:'Manager', value:'manager'}]" optionLabel="label" placeholder="Select a role" class="w-full"></p-select>
-                </div>
-             </div>
-        </div>
-        <ng-template #footer>
-            <p-button label="Save" />
-        </ng-template>
+        <add-user />
     </p-drawer>
   </main>
 

@@ -8,7 +8,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {path: 'home',loadComponent: () => import('./components/pages/home/home.component').then(m => m.HomeComponent)},
-      {path: 'users',loadComponent: () => import('./components/pages/userlist/userlist.component').then(m => m.UserlistComponent)}
+      {path: 'users',loadComponent: () => import('./components/pages/user/userlist/userlist.component').then(m => m.UserlistComponent)}
     ]
   },
   {path: '**', redirectTo: 'login'}
