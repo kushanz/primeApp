@@ -56,8 +56,9 @@
     </div>
 
     <p-drawer header="Add user details" [(visible)]="visible" styleClass="!w-full md:!w-80 lg:!w-[30rem]" position="right" [blockScroll]="true" dismissable="true" [modal]="true" (onShow)="focusFirstInput()">
-        <add-user />
+        <add-user (saved)="onUserSaved($event)" />
     </p-drawer>
   </main>
 
 
+<p-toast position="bottom-right"></p-toast>

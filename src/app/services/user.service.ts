@@ -1,9 +1,10 @@
 import { httpResource,  } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, linkedSignal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment'; // Adjust the path as necessary
 import { debounce, debounceTime, delay } from 'rxjs';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop'
+import { UserModel } from '../dto/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class UserService {
   stream: () => this.http.get<any[]>(`${environment.baseUrl}/users?search=${this.search()}`,{withCredentials: true}),
   defaultValue: [],
   });
-  allUsersSignal = computed(() => this.userResource.value ?? []);
-  userLoading = computed(() => this.userResource.isLoading);
+  allUsersSignal = linkedSignal(() => this.userResource.value() ?? []);
+  userLoading = computed(() => this.userResource.isLoading());
   // userResource = httpResource<any>(() => `http://localhost:3000/api/users?search=${this.search()}`);
 
   // userResource2 = httpResource<any>(() =>  ({
@@ -34,7 +35,22 @@ export class UserService {
   //   headers: { 'Accept': 'application/json' },
   // }))
 
-  allUSers() {
+  saveUser(user: UserModel) {
+    let obj = {
+      name: user.firstname + ' ' + user.lastname,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+    }
+    const url = `${environment.baseUrl}/users`;
+    return this.http.post(url, obj, {withCredentials: true});
+  }
+
+  addUser(user: any) {
+    this.allUsersSignal.update(currentList => [user,...currentList]);
+  }
+
+  allUsers() {
     // delay response with 5 seconds to simulate loading
 
     return this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(

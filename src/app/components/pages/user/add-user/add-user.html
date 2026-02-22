@@ -1,38 +1,100 @@
 <div class="flex flex-col gap-4 h-[calc(100%-65px)]">
     <!-- <div class="font-semibold text-xl">Horizontal</div> -->
-    <div class="grid grid-cols-12 gap-4">
-        <label for="firstname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">First Name</label>
+     <form autocomplete="off" class="flex flex-col gap-4">
+         <div class="grid grid-cols-12 gap-4">
+             <label for="firstname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">First Name
+            @if(addUserForm.firstname().required()) {
+            <span class="text-red-500">*</span>
+            }
+        </label>
         <div class="col-span-12 md:col-span-9">
-            <input pInputText id="firstname" type="text" class="w-full" />
+            <input pInputText id="firstname" type="text" class="w-full" [field]="addUserForm.firstname" 
+            [class.ng-invalid]="addUserForm.firstname().invalid() && addUserForm.firstname().touched()" 
+                [class.ng-dirty]="addUserForm.firstname().touched()" />
+                @if(addUserForm.firstname().invalid() && addUserForm.firstname().touched()) {
+                    @for (error of addUserForm.firstname().errors(); track error.kind) {
+                        <p-message severity="error" size="small" variant="simple">{{error.message}}</p-message>
+                    }
+            }
         </div>
     </div>
     <div class="grid grid-cols-12 gap-4">
-        <label for="lastname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Last Name</label>
-        <div class="col-span-12 md:col-span-9">
-            <input pInputText id="lastname" type="text" class="w-full" />
-        </div>
+        <label for="lastname" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Last Name
+            @if(addUserForm.lastname().required()) {
+            <span class="text-red-500">*</span>
+        }
+    </label>
+    <div class="col-span-12 md:col-span-9">
+        <input pInputText id="lastname" type="text" class="w-full" [field]="addUserForm.lastname" 
+        [class.ng-invalid]="addUserForm.lastname().invalid() && addUserForm.lastname().touched()" 
+        [class.ng-dirty]="addUserForm.lastname().touched()" />
+            @if(addUserForm.lastname().invalid() && addUserForm.lastname().touched()) {
+                @for (error of addUserForm.lastname().errors(); track error.kind) {
+                    <p-message severity="error" size="small" variant="simple">{{error.message}}</p-message>
+            }
+        }
     </div>
-    <div class="grid grid-cols-12 gap-4">
-        <label for="email" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Email</label>
+</div>
+<div class="grid grid-cols-12 gap-4">
+    <label for="email" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Email
+        @if(addUserForm.email().required()) {
+            <span class="text-red-500">*</span>
+            }
+        </label>
         <div class="col-span-12 md:col-span-9">
-            <input pInputText id="email" type="text" class="w-full" />
+            <input pInputText id="email" type="text" class="w-full" [field]="addUserForm.email" 
+                [class.ng-invalid]="addUserForm.email().invalid() && addUserForm.email().touched()" 
+                [class.ng-dirty]="addUserForm.email().touched()" />
+                @if(addUserForm.email().invalid() && addUserForm.email().touched()) {
+                    @for (error of addUserForm.email().errors(); track error.kind) {
+                        <p-message severity="error" size="small" variant="simple">{{error.message}}</p-message>
+                    }
+                }
+            </div>
         </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4">
-        <label for="password" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Password</label>
-        <div class="col-span-12 md:col-span-9">
-            <input pInputText id="password" type="password" class="w-full" autocomplete="new-password" />
+        <div class="grid grid-cols-12 gap-4">
+        <label for="password" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Password
+            @if(addUserForm.password().required()) {
+            <span class="text-red-500">*</span>
+        }
+    </label>
+    <div class="col-span-12 md:col-span-9">
+            <input pInputText id="password" type="password" class="w-full" autocomplete="new-password"
+                [field]="addUserForm.password" 
+                [class.ng-invalid]="addUserForm.password().invalid() && addUserForm.password().touched()" 
+                [class.ng-dirty]="addUserForm.password().touched()" />
+            @if(addUserForm.password().invalid() && addUserForm.password().touched()) {
+            @for (error of addUserForm.password().errors(); track error.kind) {
+            <p-message severity="error" size="small" variant="simple">{{error.message}}</p-message>
+            }
+            }
         </div>
     </div>
     <!-- // add select field for user role as admin| user | manager -->
-      <div class="grid grid-cols-12 gap-4">
-        <label for="role" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Role</label>
+    <div class="grid grid-cols-12 gap-4">
+        <label for="role" class="flex items-center col-span-12 mb-2 md:col-span-3 md:mb-0">Role
+            @if(addUserForm.role().required()) {
+                <span class="text-red-500">*</span>
+            }
+        </label>
         <div class="col-span-12 md:col-span-9">
-            <p-select id="role" [options]="[{label:'Admin', value:'admin'}, {label:'User', value:'user'}, {label:'Manager', value:'manager'}]" optionLabel="label" placeholder="Select a role" class="w-full"></p-select>
+            <p-select id="role"
+            [options]="[{label:'Admin', value:'admin'}, {label:'User', value:'user'}, {label:'Manager', value:'manager'}]"
+            optionLabel="label" optionValue="value" placeholder="Select a role" class="w-full"
+            [field]="addUserForm.role" 
+            [class.ng-invalid]="addUserForm.role().invalid() && addUserForm.role().touched()" 
+            [class.ng-dirty]="addUserForm.role().touched()"></p-select>
+            @if(addUserForm.role().invalid() && addUserForm.role().touched()) {
+            @for (error of addUserForm.role().errors(); track error.kind) {
+            <p-message severity="error" size="small" variant="simple">{{error.message}}</p-message>
+            }
+            }
         </div>
-      </div>
+    </div>
+</form>
 </div>
 <!-- footer: stays directly below content (no internal scroll) -->
 <div class="pt-4 border-t border-gray-200 flex justify-end mt-4">
-    <p-button label="Save" class="" />
+    <p-button label="Reset" class="p-button-secondary mr-2" (click)="resetForm()" />
+    <p-button label="Save" [disabled]="!addUserForm().valid()" (click)="saveUser()" />
 </div>

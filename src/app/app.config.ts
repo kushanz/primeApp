@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [provideZonelessChangeDetection(),
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideRouter(routes),
-    // provideAnimationsAsync(),
+        // provideAnimationsAsync(),
     providePrimeNG({
         theme: {
             preset: MyPreset,

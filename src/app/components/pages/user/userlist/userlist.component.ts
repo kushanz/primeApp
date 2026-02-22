@@ -10,24 +10,28 @@ import { InputTextModule } from 'primeng/inputtext';
 // import { DialogModule } from 'primeng/dialog';
 import {DrawerModule} from 'primeng/drawer';
 import { AddUser } from '../add-user/add-user';
+import { MessageService } from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 
 
 @Component({
   selector: 'userlist',
-  imports: [TableModule, DatePipe, SplitButton, FormsModule, InputTextModule, DrawerModule, AddUser],
+  imports: [TableModule, DatePipe, SplitButton, FormsModule, InputTextModule, DrawerModule, AddUser, ToastModule],
   templateUrl: './userlist.component.html',
-  styleUrl: './userlist.component.scss'
+  styleUrl: './userlist.component.scss',
+  providers: [MessageService]
 })
 export class UserlistComponent {
 
   visible = signal(false);
 
   usersService = inject(UserService)
+  messageService = inject(MessageService);
 
   searchText = this.usersService.search;
   
-  userList = this.usersService.allUsersSignal();
-  userLoading = this.usersService.userLoading()
+  userList = this.usersService.allUsersSignal;
+  userLoading = this.usersService.userLoading;
 
   fakeList = signal(Array.from({ length: 10 }, (_, i) =>  `Item #${i}`));
   items: MenuItem[];
@@ -78,5 +82,9 @@ focusFirstInput() {
     const input = document.getElementById('firstname') as HTMLInputElement;
     input?.focus();
   }, 100);
+}
+onUserSaved(msg: string) {
+  this.visible.set(false);
+  this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
 }
 }
