@@ -37,13 +37,14 @@ export class UserService {
 
   saveUser(user: UserModel) {
     let obj = {
-      name: user.firstname + ' ' + user.lastname,
+      firstname: user.firstname,
+      lastname: user.lastname,
       email: user.email,
       password: user.password,
       role: user.role,
     }
     const url = `${environment.baseUrl}/users`;
-    return this.http.post(url, obj, {withCredentials: true});
+    return this.http.post(url, user, {withCredentials: true});
   }
 
   addUser(user: any) {

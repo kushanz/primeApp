@@ -9,7 +9,7 @@
   </header>
   <main>
     <div class="bg-[var(--surface-card)] shadow-sm p-3 rounded-[var(--content-border-radius)]">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-8xl px-4 py-6 sm:px-6 lg:px-8">
           <!-- Your content -->
           <!-- @if(userLoading()) { -->
             <!-- <p-table [value]="fakeList()" [tableStyle]="{ 'min-width': '50rem' }" [rows]="5"> -->
@@ -31,7 +31,7 @@
                 </ng-template> -->
             <!-- </p-table> -->
           <!-- } @else { -->
-            <p-table [value]="userList()" [paginator]="true" [rows]="15" [loading]="userLoading()" class="min-h-[calc(100vh-320px)]">
+            <p-table [value]="userList()" stripedRows [paginator]="true" [rows]="15" [loading]="userLoading()" showGridlines  class="min-h-[calc(100vh-320px)]" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
@@ -42,9 +42,9 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
-                        <td>{{ user.name }}</td>
+                        <td>{{ `${user.firstname} ${user.lastname}` }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.role }}</td>
+                        <td> <span class="pill {{ user.role === 'admin' ? 'pill-danger' : user.role === 'manager' ? 'pill-warning' : 'pill-success' }}">{{ user.role }}</span></td>
                         <td>{{ user.createdAt | date}}</td>
                     </tr>
                 </ng-template>
@@ -61,4 +61,4 @@
   </main>
 
 
-<p-toast position="bottom-right"></p-toast>
+<p-toast position="bottom-center"></p-toast>

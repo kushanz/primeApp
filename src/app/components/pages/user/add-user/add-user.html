@@ -96,5 +96,5 @@
 <!-- footer: stays directly below content (no internal scroll) -->
 <div class="pt-4 border-t border-gray-200 flex justify-end mt-4">
     <p-button label="Reset" class="p-button-secondary mr-2" (click)="resetForm()" />
-    <p-button label="Save" [disabled]="!addUserForm().valid()" (click)="saveUser()" />
+    <p-button label="Save" [disabled]="!addUserForm().valid()" (click)="saveUser()" [loading]="saving()" />
 </div>
