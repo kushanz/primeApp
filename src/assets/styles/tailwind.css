@@ -56,7 +56,3 @@
     @apply border border-[var(--surface-border)] shadow-sm rounded-[var(--content-border-radius)] overflow-hidden;
   }
 }
-
-p-table > .p-datatable-table-container {
-    min-height: calc(100vh - 280px);
-} 

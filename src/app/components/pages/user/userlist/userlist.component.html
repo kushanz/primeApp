@@ -31,8 +31,8 @@
                 </ng-template> -->
             <!-- </p-table> -->
           <!-- } @else { -->
-            <p-table [value]="userList()" stripedRows [paginator]="true" [rows]="15" [loading]="userLoading()" showGridlines  class="min-h-[calc(100vh-320px)]" [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template pTemplate="header">
+            <p-table [value]="userList()" stripedRows [paginator]="true" [rows]="15" [loading]="userLoading()"  class="min-h-[calc(100vh-320px)]" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template #header>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
@@ -40,7 +40,7 @@
                         <th>Created At</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-user>
+                <ng-template #body let-user>
                     <tr>
                         <td>{{ `${user.firstname} ${user.lastname}` }}</td>
                         <td>{{ user.email }}</td>

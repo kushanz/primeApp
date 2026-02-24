@@ -1,0 +1,13 @@
+:host ::ng-deep {
+    .p-datatable-table-container {
+        min-height: calc(100vh - 280px);
+    } 
+    
+    // .p-datatable-frozen-tbody {
+    //     font-weight: bold;
+    // }
+
+    // .p-datatable-scrollable .p-frozen-column {
+    //     font-weight: bold;
+    // }
+}
