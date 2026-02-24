@@ -36,13 +36,6 @@ export class UserService {
   // }))
 
   saveUser(user: UserModel) {
-    let obj = {
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      password: user.password,
-      role: user.role,
-    }
     const url = `${environment.baseUrl}/users`;
     return this.http.post(url, user, {withCredentials: true});
   }
