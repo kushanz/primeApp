@@ -31,12 +31,10 @@ export class RegisterComponent {
       firstname: ['', [Validators.required, Validators.minLength(2)]],
       lastname: ['', [Validators.required, Validators.minLength(2)]],
       email: ['',[Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      // confirmpassword: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
       acceptTerms: [false,Validators.requiredTrue]
-    },
-    // { validators: this.passwordMatchValidator }
-  );
+    });
   }
 
     // Custom validator for password and confirm password match
@@ -71,24 +69,32 @@ export class RegisterComponent {
 }
 
   onSubmit() {
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    if (this.registerForm.value.password !== this.registerForm.value.password_confirmation) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Passwords do not match' });
+      return;
+    }
+
     this.saving.set(true);
-    // console.log(this.registerForm.value);
-    let regUser = {
+    const regUser = {
       name: this.registerForm.value.firstname +' '+ this.registerForm.value.lastname,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      // confirmpassword: this.registerForm.value.confirmpassword,
-      // acceptTerms: this.registerForm.value.acceptTerms,
-      role: 'user',
-    }
+      password_confirmation: this.registerForm.value.password_confirmation,
+      device_name: 'prime-app-web'
+    };
+
     this.authService.userRegister(regUser).subscribe({
-      next: (res:any) => {
+      next: (res) => {
         this.registerForm.reset();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
         this.saving.set(false);
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.message || 'Registration failed' });
         this.saving.set(false);
       }
     })

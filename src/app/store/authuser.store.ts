@@ -1,26 +1,22 @@
 import { computed, effect, inject } from '@angular/core';
-import {getState, patchState, signalStore, withComputed, withHooks, withMethods,withProps ,withState} from '@ngrx/signals'
+import { getState, patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthUser } from '../services/auth.service';
 
 type loggedUserState = {
-  loggedUser: any;
+  loggedUser: AuthUser | null;
   isLoggedIn: boolean;
   token: string;
   loading: boolean;
-  accessToken?: string;
-  refreshToken?: string;
 }
 
 const initialState: loggedUserState = {
-  loggedUser: {},
+  loggedUser: null,
   isLoggedIn: false,
   token: '',
   loading: false,
-  accessToken: '',
-  refreshToken: ''
-
-}
+};
 
 export const authUserStore = signalStore(
   {providedIn: 'root'}, 
@@ -44,29 +40,33 @@ export const authUserStore = signalStore(
     },
     getAccessToken() {
       const state = getState(store);
-      return computed(() => state.accessToken);
+      return computed(() => state.token);
     },
 
-    setuser(user:any):any {
-      // save localstorage user object without token for security
-      const {token, ...userdata} = user;
-      localStorage.setItem('auth_user', JSON.stringify(userdata));
-      patchState(store,(state) => ({...state, loggedUser: user, isLoggedIn: true, loading: false}));
-  
+    setAuthSession(user: AuthUser, token: string) {
+      localStorage.setItem('auth_user', JSON.stringify(user));
+      localStorage.setItem('auth_token', token);
+      patchState(store, (state) => ({ ...state, loggedUser: user, token, isLoggedIn: true, loading: false }));
+    },
+
+    clearAuthState() {
+      localStorage.removeItem('auth_user');
+      localStorage.removeItem('auth_token');
+      patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
     },
 
     removeuser() {
-      // Call logout API to clear server-side cookies
       authService.logout().subscribe({
         next: () => {
           localStorage.removeItem('auth_user');
-          patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
+          localStorage.removeItem('auth_token');
+          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
           router.navigate(['/login']);
         },
         error: () => {
-          // Even if API fails, clear local state
           localStorage.removeItem('auth_user');
-          patchState(store,(state) => ({...state, loggedUser: {}, isLoggedIn: false}));
+          localStorage.removeItem('auth_token');
+          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
           router.navigate(['/login']);
         }
       });
@@ -78,28 +78,26 @@ export const authUserStore = signalStore(
   })),
 
   withHooks({
-    onInit: (store,authService = inject(AuthService)) => {
-      const authUserFromLS = JSON.parse(localStorage.getItem('auth_user') || '{}');
+    onInit: (store) => {
+      const authUserFromLS = JSON.parse(localStorage.getItem('auth_user') || 'null');
+      const authTokenFromLS = localStorage.getItem('auth_token') || '';
 
       patchState(store, (state) => ({
         ...state,
         loggedUser: authUserFromLS,
-        isLoggedIn: !!authUserFromLS?.token,
-        token: authUserFromLS?.token || '',
+        isLoggedIn: !!authTokenFromLS,
+        token: authTokenFromLS,
       }))
 
       effect(() => {
-        const state = getState(store)
-        localStorage.setItem('auth_user', JSON.stringify(state.loggedUser));
-      })
-
-      // authService.userRegister({}).subscribe((res) => {
-        
-      // })
-      // const token = localStorage.getItem('token');
-      // if (token) {
-      //   patchState({isLoggedIn: true, token: token});
-      // }
+        const state = getState(store);
+        if (state.loggedUser) {
+          localStorage.setItem('auth_user', JSON.stringify(state.loggedUser));
+        }
+        if (state.token) {
+          localStorage.setItem('auth_token', state.token);
+        }
+      });
     },
   })
 )
