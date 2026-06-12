@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { LayoutService } from '../layoutservice/layoutservice.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
@@ -10,6 +10,7 @@ import { RippleModule } from 'primeng/ripple';
   imports: [CommonModule,RouterModule, RippleModule],
   templateUrl: './menuitem.component.html',
   styleUrl: './menuitem.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
         '[class.active-menuitem]': 'isActive()',
         '[class.layout-root-menuitem]': 'root()'

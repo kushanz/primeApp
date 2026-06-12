@@ -11,6 +11,13 @@ Use this document to track implemented features, feature scope, and all state-st
 
 ## Current Features
 
+### Shared UI / Angular Patterns
+
+- Standalone Angular components are the default component model
+- `ChangeDetectionStrategy.OnPush` is the default component change-detection pattern for the app
+- PrimeNG-based UI patterns should stay consistent across future features
+- New feature development should define and maintain a clear state-management approach
+
 ### Authentication
 
 - Routes:

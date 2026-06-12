@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { TopbarComponent } from '../topbar/topbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-layout',
   imports: [CommonModule,RouterModule, TopbarComponent, SidebarComponent, FooterComponent],
   templateUrl: './layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
@@ -39,3 +40,4 @@ export class LayoutComponent {
         };
     }) 
 }
+

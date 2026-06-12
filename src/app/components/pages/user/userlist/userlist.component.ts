@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
@@ -19,7 +19,8 @@ import {ToastModule} from 'primeng/toast';
   imports: [TableModule, DatePipe, SplitButton, FormsModule, InputTextModule, DrawerModule, AddUser, ToastModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss',
-  providers: [MessageService]
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserlistComponent {
 

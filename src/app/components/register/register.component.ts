@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +15,8 @@ import { MessageService } from 'primeng/api';
   imports: [ButtonModule,AutoCompleteModule,SelectModule,ReactiveFormsModule,InputTextModule,CheckboxModule,RouterLink,ToastModule],
   providers: [MessageService],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent {
 
@@ -100,3 +101,4 @@ export class RegisterComponent {
     })
   }
 }
+

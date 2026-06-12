@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuitemComponent } from '../menuitem/menuitem.component';
 import { MenuItem } from 'primeng/api';
@@ -9,6 +9,7 @@ import { MenuItem } from 'primeng/api';
   imports: [CommonModule, MenuitemComponent, RouterModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
 model: MenuItem[] = [];

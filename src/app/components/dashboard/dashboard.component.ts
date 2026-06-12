@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { RouterOutlet } from '@angular/router';
 
@@ -6,7 +6,8 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-dashboard',
   imports: [RouterOutlet,HeaderComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent {
 

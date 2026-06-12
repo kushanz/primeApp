@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject } from '@angular/core';
 import { LayoutService } from '../layoutservice/layoutservice.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
@@ -9,6 +9,7 @@ import { MenuComponent } from '../menu/menu.component';
   imports: [MenuComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
 

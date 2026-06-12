@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../layoutservice/layoutservice.service';
@@ -13,6 +13,7 @@ import { DividerModule } from 'primeng/divider';
   selector: 'app-topbar',
   imports: [RouterModule, NgClass, ButtonModule, PopoverModule,DividerModule],
   templateUrl: './topbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './topbar.component.scss',
 })
 export class TopbarComponent {
@@ -34,3 +35,4 @@ export class TopbarComponent {
         this.authUserStore.removeuser();
     }
   }
+

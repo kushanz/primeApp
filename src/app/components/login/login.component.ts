@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -17,7 +17,8 @@ import { AuthService, LoginRequest } from '../../services/auth.service';
   imports: [ButtonModule,AutoCompleteModule,SelectModule,FormsModule,InputTextModule,CheckboxModule,RouterLink, ReactiveFormsModule,ToastModule],
   providers: [MessageService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
 
@@ -63,3 +64,4 @@ export class LoginComponent {
     }
   }
 }
+

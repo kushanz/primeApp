@@ -1,4 +1,4 @@
-import { Component, effect, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, output, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [ButtonModule, SelectModule, InputTextModule, Field,MessageModule],
   templateUrl: './add-user.html',
   styleUrl: './add-user.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 

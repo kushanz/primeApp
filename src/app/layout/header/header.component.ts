@@ -1,5 +1,5 @@
 
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { authUserStore } from '../../store/authuser.store';
@@ -9,7 +9,8 @@ import { Button } from 'primeng/button';
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive, PopoverModule, Button],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
 
