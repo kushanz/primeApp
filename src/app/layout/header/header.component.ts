@@ -16,7 +16,7 @@ export class HeaderComponent {
   private authUserStore = inject(authUserStore)
   private router = inject(Router)
 
-  loggedUser = this.authUserStore.getUser();
+  loggedUser = this.authUserStore.loggedUser;
 
   @ViewChild('op') op!: Popover;
 

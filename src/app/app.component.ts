@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { authUserStore } from './store/authuser.store';
 
 
 @Component({
@@ -10,6 +11,10 @@ import { RouterOutlet } from '@angular/router';
 
 })
 export class AppComponent {
-  title = 'primeApp';
+  title = 'Auth APP Laravel';
+  private authStore = inject(authUserStore);
 
+  constructor() {
+    this.authStore.loadCurrentUser();
+  }
 }

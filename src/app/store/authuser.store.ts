@@ -1,4 +1,4 @@
-import { computed, effect, inject } from '@angular/core';
+import { effect, inject } from '@angular/core';
 import { getState, patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -34,19 +34,49 @@ export const authUserStore = signalStore(
     //     }
     //   })
     // },
-    getUser() {
-      const state = getState(store);
-      return computed(() => state.loggedUser);
-    },
-    getAccessToken() {
-      const state = getState(store);
-      return computed(() => state.token);
+    setAuthSession(token: string) {
+      localStorage.setItem('auth_token', token);
+      patchState(store, (state) => ({ ...state, loggedUser: null, token, isLoggedIn: true, loading: false }));
     },
 
-    setAuthSession(user: AuthUser, token: string) {
+    loadCurrentUser() {
+      const token = localStorage.getItem('auth_token') || getState(store).token;
+
+      if (!token) {
+        patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
+        return;
+      }
+
+      patchState(store, (state) => ({ ...state, token, isLoggedIn: true, loading: true }));
+
+      authService.me().subscribe({
+        next: (res) => {
+          localStorage.setItem('auth_user', JSON.stringify(res.data.user));
+          patchState(store, (state) => ({
+            ...state,
+            loggedUser: res.data.user,
+            token,
+            isLoggedIn: true,
+            loading: false,
+          }));
+        },
+        error: () => {
+          localStorage.removeItem('auth_user');
+          localStorage.removeItem('auth_token');
+          patchState(store, (state) => ({
+            ...state,
+            loggedUser: null,
+            token: '',
+            isLoggedIn: false,
+            loading: false,
+          }));
+        }
+      });
+    },
+
+    setLoggedUser(user: AuthUser) {
       localStorage.setItem('auth_user', JSON.stringify(user));
-      localStorage.setItem('auth_token', token);
-      patchState(store, (state) => ({ ...state, loggedUser: user, token, isLoggedIn: true, loading: false }));
+      patchState(store, (state) => ({ ...state, loggedUser: user, isLoggedIn: !!state.token, loading: false }));
     },
 
     clearAuthState() {
@@ -87,6 +117,7 @@ export const authUserStore = signalStore(
         loggedUser: authUserFromLS,
         isLoggedIn: !!authTokenFromLS,
         token: authTokenFromLS,
+        loading: false,
       }))
 
       effect(() => {

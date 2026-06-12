@@ -21,7 +21,7 @@ export class TopbarComponent {
 
   private authUserStore = inject(authUserStore)
   private router = inject(Router)
-  loggedUser = this.authUserStore.getUser();
+  loggedUser = this.authUserStore.loggedUser;
 
   toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({

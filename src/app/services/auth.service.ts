@@ -27,7 +27,15 @@ export interface RegisterRequest {
   device_name?: string;
 }
 
-export interface AuthSuccessResponse {
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+  };
+}
+
+export interface RegisterResponse {
   success: boolean;
   message: string;
   data: {
@@ -42,6 +50,14 @@ export interface MessageOnlyResponse {
   data: unknown;
 }
 
+export interface CurrentUserResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: AuthUser;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,12 +69,17 @@ export class AuthService {
 
   userLogin(user: LoginRequest) {
     const url = `${environment.baseUrl}/login`;
-    return this.http.post<AuthSuccessResponse>(url, user).pipe(delay(2000));
+    return this.http.post<LoginResponse>(url, user).pipe(delay(2000));
   }
 
   userRegister(user: RegisterRequest) {
     const url = `${environment.baseUrl}/register`;
-    return this.http.post<AuthSuccessResponse>(url, user);
+    return this.http.post<RegisterResponse>(url, user);
+  }
+
+  me(): Observable<CurrentUserResponse> {
+    const url = `${environment.baseUrl}/me`;
+    return this.http.get<CurrentUserResponse>(url);
   }
 
   logout(): Observable<MessageOnlyResponse> {

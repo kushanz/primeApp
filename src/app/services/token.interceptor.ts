@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authStore = inject(authUserStore);
-  const token = authStore.getAccessToken()() || localStorage.getItem('auth_token') || '';
+  const token = authStore.token() || localStorage.getItem('auth_token') || '';
 
   const authReq = token
     ? req.clone({
@@ -19,7 +19,11 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      if ((error.status === 401 || error.status === 403) && !req.url.includes('/login') && !req.url.includes('/register')) {
+      const isAuthBootstrapRequest =
+        req.url.includes('/me') ||
+        req.url.includes('/logout');
+
+      if ((error.status === 401 || error.status === 403) && isAuthBootstrapRequest) {
         authStore.clearAuthState();
         router.navigate(['/login']);
       }

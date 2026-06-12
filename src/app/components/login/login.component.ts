@@ -47,7 +47,8 @@ export class LoginComponent {
       this.authService.userLogin(authdata).subscribe({
         next: (res) => {
           this.authStore.updateLoading(false);
-          this.authStore.setAuthSession(res.data.user, res.data.token);
+          this.authStore.setAuthSession(res.data.token);
+          this.authStore.loadCurrentUser();
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
             this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
