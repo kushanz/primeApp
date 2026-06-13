@@ -21,7 +21,7 @@
                         />
                     </g>
                 </svg>
-                <span>MEAN APP</span>
+                <span>LARA APP</span>
             </a>
         </div>
 
@@ -60,10 +60,14 @@
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button> -->
-                    <p-button type="button" class="layout-topbar-action" (click)="op.toggle($event)">
-                        <i class="pi pi-user"></i>
+                    <button type="button" class="layout-topbar-action" (click)="op.toggle($event)">
+                        @if(loading()) {
+                            <i class="pi pi-spinner pi-spin"></i>
+                        } @else {
+                            <i class="pi pi-user"></i>
+                        }
                         <span>Profile</span>
-                    </p-button>
+                    </button>
 
                     <p-popover #op>
                         <div class="flex flex-col gap-4 w-[20rem]">
@@ -84,7 +88,7 @@
                                 </ul>
                                 <p-divider />
                                 <div class="flex flex-col gap-2">
-                                    <button class="p-button p-button-text w-full justify-start" (click)="logout()">
+                                    <button class="p-button p-button-text w-full justify-start cursor-pointer" (click)="logout()">
                                         <i class="pi pi-sign-out"></i>
                                         <span>Logout</span>
                                     </button>

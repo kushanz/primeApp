@@ -17,6 +17,8 @@ Use this file as the running task ledger for the project.
 - `2026-06-13` — Updated app components to use `ChangeDetectionStrategy.OnPush` as the default component change-detection pattern
 - `2026-06-13` — Refreshed the login page visual style with modern typography, softer glass-card styling, and improved spacing/colors
 - `2026-06-13` — Refreshed the register page to match the updated auth-screen visual system and layout style
+- `2026-06-13` — Refined topbar profile loading UI so `/me` loading state uses a compact icon spinner without overflow
+- `2026-06-13` — Switched the topbar profile trigger from `p-button` to the native topbar action button so the loading icon fits the existing layout correctly
 
 ### In Progress
 
