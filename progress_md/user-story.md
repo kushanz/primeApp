@@ -27,6 +27,9 @@ Use this document to track implemented features, feature scope, and all state-st
   - login returns token
   - `/me` is the source of truth for authenticated user data
   - logout clears local auth state and calls backend logout
+- UI notes:
+  - login page uses a modern glass-card layout with cleaner typography, softer contrast, and PrimeNG-compatible custom styling
+  - register page follows the same auth-screen visual system with matching spacing, typography, and input/button styling
 
 ### Dashboard Area
 

@@ -15,6 +15,8 @@ Use this file as the running task ledger for the project.
 - `2026-06-13` — Added auth flow updates for Laravel token-based login, logout, and `/me` hydration
 - `2026-06-13` — Established `progress_md` documentation hierarchy and linked Angular boilerplate reference docs
 - `2026-06-13` — Updated app components to use `ChangeDetectionStrategy.OnPush` as the default component change-detection pattern
+- `2026-06-13` — Refreshed the login page visual style with modern typography, softer glass-card styling, and improved spacing/colors
+- `2026-06-13` — Refreshed the register page to match the updated auth-screen visual system and layout style
 
 ### In Progress
 

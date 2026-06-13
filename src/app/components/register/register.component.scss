@@ -1,0 +1,211 @@
+.register-page {
+  min-height: 100vh;
+  padding: 2rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top left, rgba(244, 114, 182, 0.36), transparent 28%),
+    radial-gradient(circle at bottom center, rgba(59, 130, 246, 0.28), transparent 30%),
+    linear-gradient(135deg, #7c1dc9 0%, #5b3fd1 34%, #425dd8 68%, #7b89ef 100%);
+}
+
+.register-shell {
+  width: 100%;
+  max-width: 34rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.register-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: #eff6ff;
+}
+
+.register-brand__logo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.7rem;
+}
+
+.register-brand__name {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.register-card {
+  width: 100%;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.register-card__inner {
+  padding: 2.2rem;
+}
+
+.register-card__header {
+  margin-bottom: 1.75rem;
+}
+
+.register-card__eyebrow {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(224, 231, 255, 0.92);
+}
+
+.register-card__title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.register-card__subtitle {
+  margin: 0.75rem 0 0;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  color: rgba(230, 236, 255, 0.82);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.register-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.register-field__label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(246, 248, 255, 0.92);
+}
+
+:host ::ng-deep .register-field__input.p-inputtext {
+  min-height: 3.25rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 500;
+  padding-inline: 1rem;
+  box-shadow: none;
+}
+
+:host ::ng-deep .register-field__input.p-inputtext::placeholder {
+  color: #64748b;
+}
+
+:host ::ng-deep .register-field__input.p-inputtext:enabled:focus {
+  border-color: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 0 0 0.22rem rgba(191, 219, 254, 0.28);
+}
+
+.register-form__meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.15rem;
+}
+
+.register-form__remember {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.register-form__remember-label {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.register-form__link,
+.register-form__signin-link {
+  color: #dbeafe;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.register-form__link:hover,
+.register-form__signin-link:hover {
+  color: #ffffff;
+}
+
+:host ::ng-deep .register-form__button .p-button {
+  min-height: 3.25rem;
+  border: 0;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.34);
+}
+
+:host ::ng-deep .register-form__button .p-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.register-form__signin {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(237, 242, 255, 0.82);
+}
+
+@media (max-width: 640px) {
+  .register-page {
+    padding: 1rem;
+  }
+
+  .register-card__inner {
+    padding: 1.5rem;
+  }
+
+  .register-brand__name {
+    font-size: 1.55rem;
+  }
+
+  .register-card__title {
+    font-size: 1.7rem;
+  }
+
+  .register-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .register-form__meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
