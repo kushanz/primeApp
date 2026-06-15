@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { form, Field, schema, required, email, minLength } from '@angular/forms/signals';
 import { AuthService } from '../../../../services/auth.service';
 import { MessageModule } from 'primeng/message';
-import { UserModel } from '../../../../dto/user.model';
+import { UserCreateModel, UserModel } from '../../../../dto/user.model';
 import { UserService } from '../../../../services/user.service';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -26,7 +26,7 @@ export class AddUser {
   saving = signal(false);
   saved = output<string>()
 
-  addUserData = signal<UserModel>(initialUserData);
+  addUserData = signal<UserCreateModel>(initialUserData);
 
   addUserForm = form(this.addUserData, addUSerSchema);
 
@@ -38,7 +38,8 @@ export class AddUser {
   this.saving.set(true);
   this.userservice.saveUser(this.addUserData()).subscribe({
       next: (res:any) => {
-        this.userservice.addUser(res);
+        const createdUser = res.data?.user ?? res.data ?? res;
+        this.userservice.addUser(createdUser as UserModel);
         this.addUserForm().reset(initialUserData);
         this.saved.emit(res.message || 'User added successfully');
         this.saving.set(false);
@@ -58,14 +59,14 @@ export class AddUser {
   
 }
 
-const initialUserData : UserModel = {
+const initialUserData : UserCreateModel = {
   firstname: '',
   lastname: '',
   email: '',
   password: '',
-  role: 'user'
+  role: 'customer'
 }
-const addUSerSchema = schema<UserModel>((rootPath) => {
+const addUSerSchema = schema<UserCreateModel>((rootPath) => {
   required(rootPath.firstname,{message:'First Name is required'});
   required(rootPath.lastname,{message:'Last Name is required'});
   required(rootPath.email,{message:'Email is required'});

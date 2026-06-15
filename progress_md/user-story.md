@@ -42,6 +42,9 @@ Use this document to track implemented features, feature scope, and all state-st
 
 - Current user listing screen exists under `/dashboard/users`
 - Current app uses feature-level service state plus shared auth state
+- Current users API shape:
+  - list response uses `{ success, message, data, meta }`
+  - user rows now use backend fields like `name` and `created_at`
 
 ## Store Registry
 

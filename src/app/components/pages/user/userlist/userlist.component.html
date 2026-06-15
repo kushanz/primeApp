@@ -42,10 +42,10 @@
                 </ng-template>
                 <ng-template #body let-user>
                     <tr>
-                        <td>{{ `${user.firstname} ${user.lastname}` }}</td>
+                        <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td> <span class="pill {{ user.role === 'admin' ? 'pill-danger' : user.role === 'manager' ? 'pill-warning' : 'pill-success' }}">{{ user.role }}</span></td>
-                        <td>{{ user.createdAt | date}}</td>
+                        <td>{{ user.created_at | date}}</td>
                     </tr>
                 </ng-template>
             </p-table>

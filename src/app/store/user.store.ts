@@ -21,8 +21,7 @@ export const userStore = signalStore(
 
   withMethods((store) => ({
     getUserList() {
-      const state = getState(store);
-      return computed(() => state.userList);
+      return computed(() => store.userList());
     },
     setUserList(list: UserModel[]) {
       patchState(store, (state) => ({ ...state, userList: list, loading: false }))

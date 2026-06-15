@@ -1,10 +1,9 @@
-import { httpResource,  } from '@angular/common/http';
-import { computed, effect, inject, Injectable, linkedSignal, signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'; // Adjust the path as necessary
-import { debounce, debounceTime, delay } from 'rxjs';
-import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop'
-import { UserModel } from '../dto/user.model';
+import { environment } from '../../environments/environment';
+import { debounceTime, map, tap } from 'rxjs';
+import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { UserCreateModel, UserModel, UsersMeta, UsersResponse } from '../dto/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,37 +17,33 @@ export class UserService {
   search = signal<string>('');
   search$ = toObservable(this.search).pipe(debounceTime(400));
   searchDebounce = toSignal(this.search$, {initialValue: ''});
-  // userResource = httpResource<any>(() => `${environment.baseUrl}/users`);
   userResource = rxResource({
-  params: this.searchDebounce,
-  stream: () => this.http.get<any[]>(`${environment.baseUrl}/users?search=${this.search()}`,{withCredentials: true}),
-  defaultValue: [],
+    params: this.searchDebounce,
+    stream: () =>
+      this.http
+        .get<UsersResponse>(`${environment.baseUrl}/users?search=${this.search()}`)
+        .pipe(
+          tap((response) => this.usersMeta.set(response.meta)),
+          map((response) => response.data)
+        ),
+    defaultValue: [],
   });
   allUsersSignal = linkedSignal(() => this.userResource.value() ?? []);
   userLoading = computed(() => this.userResource.isLoading());
-  // userResource = httpResource<any>(() => `http://localhost:3000/api/users?search=${this.search()}`);
+  usersMeta = signal<UsersMeta | null>(null);
 
-  // userResource2 = httpResource<any>(() =>  ({
-  //   url: `http://localhost:3000/api/users`,
-  //   method: 'GET',
-  //   params: { search: this.search() },
-  //   headers: { 'Accept': 'application/json' },
-  // }))
-
-  saveUser(user: UserModel) {
+  saveUser(user: UserCreateModel) {
     const url = `${environment.baseUrl}/users`;
-    return this.http.post(url, user, {withCredentials: true});
+    return this.http.post(url, user);
   }
 
-  addUser(user: any) {
+  addUser(user: UserModel) {
     this.allUsersSignal.update(currentList => [user,...currentList]);
   }
 
   allUsers() {
-    // delay response with 5 seconds to simulate loading
-
-    return this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(
-      delay(5000)
+    return this.http.get<UsersResponse>(`${environment.baseUrl}/users`).pipe(
+      map((response) => response.data)
     );
   }
 }

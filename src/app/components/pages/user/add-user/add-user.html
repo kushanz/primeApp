@@ -79,7 +79,7 @@
         </label>
         <div class="col-span-12 md:col-span-9">
             <p-select id="role"
-            [options]="[{label:'Admin', value:'admin'}, {label:'User', value:'user'}, {label:'Manager', value:'manager'}]"
+            [options]="[{label:'Admin', value:'admin'}, {label:'Customer', value:'customer'}, {label:'Manager', value:'manager'}]"
             optionLabel="label" optionValue="value" placeholder="Select a role" class="w-full"
             [field]="addUserForm.role" 
             [class.ng-invalid]="addUserForm.role().invalid() && addUserForm.role().touched()" 
