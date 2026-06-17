@@ -20,6 +20,7 @@ Use this file as the running task ledger for the project.
 - `2026-06-13` — Refined topbar profile loading UI so `/me` loading state uses a compact icon spinner without overflow
 - `2026-06-13` — Switched the topbar profile trigger from `p-button` to the native topbar action button so the loading icon fits the existing layout correctly
 - `2026-06-14` — Updated user DTOs, service mapping, and user-list bindings for the new `/api/users` response shape with `data` and `meta`
+- `2026-06-17` — Updated logout flow to hard-redirect to `/login` after clearing local auth state so in-memory app caches are flushed
 
 ### In Progress
 

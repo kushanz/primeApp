@@ -1,7 +1,6 @@
 import { effect, inject } from '@angular/core';
 import { getState, patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 import { AuthUser } from '../services/auth.service';
 
 type loggedUserState = {
@@ -23,7 +22,7 @@ export const authUserStore = signalStore(
 
   withState(initialState),
 
-  withMethods((store, authService = inject(AuthService), router = inject(Router)) => ({
+  withMethods((store, authService = inject(AuthService)) => ({
 
     // register(registerUser:any) {
     //   patchState(store,(state) => ({...state, loading: true}));
@@ -91,13 +90,13 @@ export const authUserStore = signalStore(
           localStorage.removeItem('auth_user');
           localStorage.removeItem('auth_token');
           patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
-          router.navigate(['/login']);
+          window.location.replace('/login');
         },
         error: () => {
           localStorage.removeItem('auth_user');
           localStorage.removeItem('auth_token');
           patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
-          router.navigate(['/login']);
+          window.location.replace('/login');
         }
       });
     },
