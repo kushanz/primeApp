@@ -1,11 +1,11 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { EMPTY, catchError, throwError } from 'rxjs';
 import { authUserStore } from '../store/authuser.store';
-import { Router } from '@angular/router';
+
+let isHandlingUnauthorized = false;
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const router = inject(Router);
   const authStore = inject(authUserStore);
   const token = authStore.token() || localStorage.getItem('auth_token') || '';
 
@@ -19,13 +19,27 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
+      const isPublicAuthRequest =
+        req.url.includes('/login') ||
+        req.url.includes('/register');
+
+      if (error.status === 401 && !isPublicAuthRequest) {
+        if (!isHandlingUnauthorized) {
+          isHandlingUnauthorized = true;
+          authStore.clearAuthState();
+          window.location.replace('/login');
+        }
+        return EMPTY;
+      }
+
       const isAuthBootstrapRequest =
         req.url.includes('/me') ||
         req.url.includes('/logout');
 
-      if ((error.status === 401 || error.status === 403) && isAuthBootstrapRequest) {
+      if (error.status === 403 && isAuthBootstrapRequest) {
         authStore.clearAuthState();
-        router.navigate(['/login']);
+        window.location.replace('/login');
+        return EMPTY;
       }
 
       return throwError(() => error);
