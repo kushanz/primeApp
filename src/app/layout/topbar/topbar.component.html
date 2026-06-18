@@ -88,10 +88,14 @@
                                 </ul>
                                 <p-divider />
                                 <div class="flex flex-col gap-2">
-                                    <button class="p-button p-button-text w-full justify-start cursor-pointer" (click)="logout()">
-                                        <i class="pi pi-sign-out"></i>
-                                        <span>Logout</span>
-                                    </button>
+                                    <p-button
+                                        label="Logout"
+                                        icon="pi pi-sign-out"
+                                        severity="secondary"
+                                        styleClass="w-full justify-start"
+                                        [loading]="logoutLoading()"
+                                        [disabled]="logoutLoading()"
+                                        (onClick)="logout()" />
                                 </div>
                             </div>
                         </div>

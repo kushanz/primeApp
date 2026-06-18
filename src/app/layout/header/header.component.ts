@@ -18,6 +18,7 @@ export class HeaderComponent {
   private router = inject(Router)
 
   loggedUser = this.authUserStore.loggedUser;
+  logoutLoading = this.authUserStore.logoutLoading;
 
   @ViewChild('op') op!: Popover;
 

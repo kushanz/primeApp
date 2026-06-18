@@ -8,6 +8,7 @@ type loggedUserState = {
   isLoggedIn: boolean;
   token: string;
   loading: boolean;
+  logoutLoading: boolean;
 }
 
 const initialState: loggedUserState = {
@@ -15,6 +16,7 @@ const initialState: loggedUserState = {
   isLoggedIn: false,
   token: '',
   loading: false,
+  logoutLoading: false,
 };
 
 export const authUserStore = signalStore(
@@ -35,14 +37,14 @@ export const authUserStore = signalStore(
     // },
     setAuthSession(token: string) {
       localStorage.setItem('auth_token', token);
-      patchState(store, (state) => ({ ...state, loggedUser: null, token, isLoggedIn: true, loading: false }));
+      patchState(store, (state) => ({ ...state, loggedUser: null, token, isLoggedIn: true, loading: false, logoutLoading: false }));
     },
 
     loadCurrentUser() {
       const token = localStorage.getItem('auth_token') || getState(store).token;
 
       if (!token) {
-        patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
+        patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false, logoutLoading: false }));
         return;
       }
 
@@ -57,6 +59,7 @@ export const authUserStore = signalStore(
             token,
             isLoggedIn: true,
             loading: false,
+            logoutLoading: false,
           }));
         },
         error: () => {
@@ -68,6 +71,7 @@ export const authUserStore = signalStore(
             token: '',
             isLoggedIn: false,
             loading: false,
+            logoutLoading: false,
           }));
         }
       });
@@ -75,27 +79,28 @@ export const authUserStore = signalStore(
 
     setLoggedUser(user: AuthUser) {
       localStorage.setItem('auth_user', JSON.stringify(user));
-      patchState(store, (state) => ({ ...state, loggedUser: user, isLoggedIn: !!state.token, loading: false }));
+      patchState(store, (state) => ({ ...state, loggedUser: user, isLoggedIn: !!state.token, loading: false, logoutLoading: false }));
     },
 
     clearAuthState() {
       localStorage.removeItem('auth_user');
       localStorage.removeItem('auth_token');
-      patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
+      patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false, logoutLoading: false }));
     },
 
     removeuser() {
+      patchState(store, (state) => ({ ...state, logoutLoading: true }));
       authService.logout().subscribe({
         next: () => {
           localStorage.removeItem('auth_user');
           localStorage.removeItem('auth_token');
-          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
+          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false, logoutLoading: false }));
           window.location.replace('/login');
         },
         error: () => {
           localStorage.removeItem('auth_user');
           localStorage.removeItem('auth_token');
-          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false }));
+          patchState(store, (state) => ({ ...state, loggedUser: null, token: '', isLoggedIn: false, loading: false, logoutLoading: false }));
           window.location.replace('/login');
         }
       });
@@ -117,6 +122,7 @@ export const authUserStore = signalStore(
         isLoggedIn: !!authTokenFromLS,
         token: authTokenFromLS,
         loading: false,
+        logoutLoading: false,
       }))
 
       effect(() => {
