@@ -1,0 +1,36 @@
+.topbar-user-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.topbar-user-badge--panel {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 72%, white 28%) 100%);
+  color: var(--primary-contrast-color);
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  font-size: 0.8rem;
+}
+
+:host ::ng-deep .layout-topbar .layout-topbar-action .topbar-user-badge {
+  display: inline-flex !important;
+}
+
+.topbar-user-trigger {
+  background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 72%, white 28%) 100%);
+  color: var(--primary-contrast-color) !important;
+}
+
+.topbar-user-trigger:hover {
+  filter: brightness(1.03);
+}

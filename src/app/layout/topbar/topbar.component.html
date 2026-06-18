@@ -60,9 +60,15 @@
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button> -->
-                    <button type="button" class="layout-topbar-action" (click)="op.toggle($event)">
+                    <button
+                        type="button"
+                        class="layout-topbar-action"
+                        [class.topbar-user-trigger]="!!loggedUser()?.name && !loading()"
+                        (click)="op.toggle($event)">
                         @if(loading()) {
                             <i class="pi pi-spinner pi-spin"></i>
+                        } @else if (loggedUser()?.name) {
+                            <span class="topbar-user-badge">{{ getUserInitials(loggedUser()?.name) }}</span>
                         } @else {
                             <i class="pi pi-user"></i>
                         }
@@ -75,7 +81,9 @@
                                 <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Login User</span>
                                 <ul class="list-none p-0 m-0 flex flex-col gap-4">
                                     <li class="flex items-center gap-2">
-                                        <img [src]="'https://api.dicebear.com/9.x/adventurer/svg?seed=Luis'" style="width: 32px" />
+                                        <div class="topbar-user-badge topbar-user-badge--panel">
+                                            {{ getUserInitials(loggedUser()?.name) }}
+                                        </div>
                                         <div>
                                             <span class="font-medium">{{ loggedUser()?.name }}</span>
                                             <div class="text-sm text-muted-color">{{ loggedUser()?.email }}</div>

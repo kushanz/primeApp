@@ -32,6 +32,23 @@ export class TopbarComponent {
         }));
     }
 
+    getUserInitials(name: string | undefined | null) {
+        if (!name?.trim()) {
+            return 'U';
+        }
+
+        const parts = name
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+        if (parts.length === 1) {
+            return parts[0].charAt(0).toUpperCase();
+        }
+
+        return `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`.toUpperCase();
+    }
+
     logout() {
         this.authUserStore.removeuser();
     }
